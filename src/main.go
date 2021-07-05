@@ -9,8 +9,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var PORT string = "8080"
-
 func init() {
 	var filename string = "general.log"
 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
@@ -145,10 +143,10 @@ func main() {
 	fs := http.FileServer(http.Dir("html/css"))
 	http.Handle("/css/", http.StripPrefix("/css/", fs))
 
-	err := http.ListenAndServe(":"+PORT, nil)
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
 		log.WithFields(log.Fields{
-			"Port": PORT,
+			"Port": os.Getenv("PORT"),
 		}).Fatal("Error on ListenAndServe")
 		fmt.Println("Fatal on listenAndServe")
 	}
