@@ -45,7 +45,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 func home(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("home method: ", r.Method)
 	if r.Method == "GET" {
-		t, _ := template.ParseFiles("html/home.html")
+		t, _ := template.ParseFiles("src/html/home.html")
 		t.Execute(w, nil)
 	} else {
 		log.WithFields(log.Fields{
@@ -86,7 +86,7 @@ func response(w http.ResponseWriter, r *http.Request) {
 						Level:   level,
 					}
 
-					t := template.Must(template.ParseFiles("html/response.html"))
+					t := template.Must(template.ParseFiles("src/html/response.html"))
 					t.Execute(w, respon1)
 
 					log.WithFields(log.Fields{
@@ -124,7 +124,7 @@ func response(w http.ResponseWriter, r *http.Request) {
 func characterError(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("index method: ", r.Method)
 	if r.Method == "GET" {
-		t, _ := template.ParseFiles("html/error.html")
+		t, _ := template.ParseFiles("src/html/error.html")
 		t.Execute(w, nil)
 	} else {
 		log.WithFields(log.Fields{
@@ -140,7 +140,7 @@ func main() {
 	http.HandleFunc("/home", home)
 	http.HandleFunc("/response", response)
 
-	fs := http.FileServer(http.Dir("html/css"))
+	fs := http.FileServer(http.Dir("src/html/css"))
 	http.Handle("/css/", http.StripPrefix("/css/", fs))
 
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
