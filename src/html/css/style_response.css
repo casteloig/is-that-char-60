@@ -1,0 +1,26 @@
+body {
+    background-color:azure;
+    padding-top: 10%;
+}
+
+h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:black;
+    font-size: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    font-size: 25;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
