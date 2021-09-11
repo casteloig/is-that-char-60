@@ -1,19 +1,20 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
+
 body {
-    background-color:azure;
+    background-color:rgb(255, 255, 255);
     padding-top: 10%;
 }
 
 h1 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color:black;
-    font-size: 50;
+    font-size: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
-p {
+#msg {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
     font-size: 25;
@@ -24,3 +25,13 @@ form {
     justify-content: center;
     align-items: center;
 }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:rgb(238, 236, 236);
+    padding:2rem 1.5rem 2rem;
+    text-align: center;
+  }
