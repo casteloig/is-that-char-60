@@ -1,1 +1,1 @@
-First commit
+Discover if a character is level 60 in World of Warcraft

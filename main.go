@@ -3,8 +3,11 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"math/rand"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -28,6 +31,7 @@ type Respon struct {
 	Realm   string
 	Region  string
 	Level   int
+	Image   string
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
@@ -78,12 +82,14 @@ func response(w http.ResponseWriter, r *http.Request) {
 						b = "Yes"
 					}
 
+					im := generateRandomImage()
 					respon1 := Respon{
 						Boolean: b,
 						Name:    name,
 						Realm:   realm,
 						Region:  region,
 						Level:   level,
+						Image:   im,
 					}
 
 					t := template.Must(template.ParseFiles("src/html/response.html"))
@@ -142,12 +148,32 @@ func main() {
 
 	fs := http.FileServer(http.Dir("src/html/css"))
 	http.Handle("/css/", http.StripPrefix("/css/", fs))
+	fsi := http.FileServer(http.Dir("src/html/images"))
+	http.Handle("/images/", http.StripPrefix("/images/", fsi))
 
-	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	//err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	err := http.ListenAndServe(":4000", nil)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"Port": os.Getenv("PORT"),
 		}).Fatal("Error on ListenAndServe")
 		fmt.Println("Fatal on listenAndServe")
 	}
+}
+
+func generateRandomImage() string {
+	s1 := rand.NewSource(time.Now().UnixNano())
+	r1 := rand.New(s1)
+
+	var number int
+	for ok := true; ok; ok = true {
+		number = r1.Intn(5)
+		if number != 0 {
+			break
+		}
+	}
+
+	str := "images/" + strconv.Itoa(number) + ".gif"
+	fmt.Println(str)
+	return str
 }
