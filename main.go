@@ -151,8 +151,7 @@ func main() {
 	fsi := http.FileServer(http.Dir("src/html/images"))
 	http.Handle("/images/", http.StripPrefix("/images/", fsi))
 
-	//err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
-	err := http.ListenAndServe(":4000", nil)
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"Port": os.Getenv("PORT"),
