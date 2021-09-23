@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 
+	sentry "github.com/getsentry/sentry-go"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -29,6 +30,7 @@ func auth() string {
 	form.Add("grant_type", "client_credentials")
 	req, err := http.NewRequest("POST", auth_uri, strings.NewReader(form.Encode()))
 	if err != nil {
+		sentry.CaptureMessage("Error in NewRequest")
 		log.WithFields(log.Fields{
 			"func": "auth",
 		}).Error("Error in NewRequest")
@@ -40,6 +42,7 @@ func auth() string {
 
 	resp, err := client.Do(req)
 	if err != nil {
+		sentry.CaptureMessage("Error in clientDo")
 		log.WithFields(log.Fields{
 			"func": "auth",
 		}).Error("Error in clientDo")
@@ -49,6 +52,7 @@ func auth() string {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		sentry.CaptureMessage("Error in ReadAll")
 		log.WithFields(log.Fields{
 			"func": "auth",
 		}).Error("Error while reading body response")
@@ -72,6 +76,7 @@ func isChar60(realm string, charName string, region string, bearerToken string) 
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", uri_char, nil)
 	if err != nil {
+		sentry.CaptureMessage("Error in NewRequest")
 		log.WithFields(log.Fields{
 			"func": "isChar60",
 		}).Error("Error NewRequest")
@@ -82,6 +87,7 @@ func isChar60(realm string, charName string, region string, bearerToken string) 
 
 	resp, err := client.Do(req)
 	if err != nil {
+		sentry.CaptureMessage("Error in clientDo")
 		log.WithFields(log.Fields{
 			"func": "isChar60",
 		}).Error("Error in clientDo")
@@ -92,6 +98,7 @@ func isChar60(realm string, charName string, region string, bearerToken string) 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		sentry.CaptureMessage("Error in ReadAll")
 		log.WithFields(log.Fields{
 			"func": "isChar60",
 		}).Error("Error while reading body response")

@@ -2,6 +2,12 @@
 ## explicit
 # github.com/dchest/safefile v0.0.0-20151022103144-855e8d98f185
 ## explicit
+# github.com/getsentry/sentry-go v0.11.0
+## explicit
+github.com/getsentry/sentry-go
+github.com/getsentry/sentry-go/internal/crypto/randutil
+github.com/getsentry/sentry-go/internal/debug
+github.com/getsentry/sentry-go/internal/ratelimit
 # github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 ## explicit
 # github.com/kardianos/govendor v1.0.9

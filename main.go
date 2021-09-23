@@ -9,14 +9,23 @@ import (
 	"strconv"
 	"time"
 
+	sentry "github.com/getsentry/sentry-go"
 	log "github.com/sirupsen/logrus"
 )
 
 func init() {
+	err := sentry.Init(sentry.ClientOptions{
+		Dsn: "https://18e7bd4ed00d4ebda6bee172125d3118@o1010291.ingest.sentry.io/5974739",
+	})
+	if err != nil {
+		log.Fatalf("sentry.Init: %s", err)
+	}
+
 	var filename string = "general.log"
 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 
 	if err != nil {
+		sentry.CaptureMessage(err.Error())
 		log.Println(err)
 	} else {
 		log.SetOutput(f)
@@ -39,6 +48,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		http.Redirect(w, r, "/home", http.StatusFound)
 	} else {
+		sentry.CaptureMessage("Method received different than GET")
 		log.WithFields(log.Fields{
 			"uri": "*",
 		}).Error("Method received different than GET")
@@ -52,6 +62,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("src/html/home.html")
 		t.Execute(w, nil)
 	} else {
+		sentry.CaptureMessage("Method received different than GET")
 		log.WithFields(log.Fields{
 			"uri": "/home",
 		}).Error("Method received different than GET")
@@ -120,6 +131,7 @@ func response(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else {
+		sentry.CaptureMessage("Method received different than GET")
 		log.WithFields(log.Fields{
 			"uri": "/response",
 		}).Error("Method received different than GET")
@@ -133,6 +145,7 @@ func characterError(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("src/html/error.html")
 		t.Execute(w, nil)
 	} else {
+		sentry.CaptureMessage("Method received different than GET")
 		log.WithFields(log.Fields{
 			"uri": "/character_error",
 		}).Error("Method received different than GET")
