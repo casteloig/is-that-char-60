@@ -21,6 +21,10 @@ func init() {
 		log.Fatalf("sentry.Init: %s", err)
 	}
 
+	defer sentry.Flush(2 * time.Second)
+
+	sentry.CaptureMessage("It works!")
+
 	var filename string = "general.log"
 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 
